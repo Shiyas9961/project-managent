@@ -19,10 +19,12 @@ function TableComponent() {
         setModalShow(true)
         dispatch(setTaskList(task))
     }
+
     const deleteTask = (task) => {
-        dispatch(deleteTaskFromServer(task))
         dispatch(deleteTaskFromList(task))
-    }
+        dispatch(deleteTaskFromServer(task))
+  }
+
   return (
     <>
         <Table striped bordered hover>
@@ -38,7 +40,7 @@ function TableComponent() {
                 {
                     tasksList && tasksList.map((task,index)=>{
                         return (
-                            <tr key={task.id} className='text-center'>
+                            <tr key={index} className='text-center'>
                                 <td>{index+1}</td>
                                 <td>{task.title}</td>
                                 <td>{task.description}</td>

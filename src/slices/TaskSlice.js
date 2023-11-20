@@ -7,7 +7,7 @@ const initialState = {
     error : ''
 }
 
-const BASE_URL = 'http://localhost:8500/tasks'
+const BASE_URL = 'http://localhost:4000/api/tasks'
 
 //GET
 export const getTaskFromServer = createAsyncThunk(
@@ -34,8 +34,7 @@ export const addTaskToServer = createAsyncThunk(
                 "Content-type":"application/json; charset=UTF-8"
             }
         }
-        console.log(options)
-        const response = await fetch('http://localhost:8500/tasks',options)
+        const response = await fetch(BASE_URL,options)
         if(response.ok){
             const jsonResponse = await response.json()
             return jsonResponse
@@ -57,9 +56,9 @@ export const updateTaskInServer = createAsyncThunk(
                 "Content-type":"application/json; charset=UTF-8"
             }
         }
-        const response = await fetch(`${BASE_URL}/${task.id}`,options)
+        const response = await fetch(`${BASE_URL}/${task._id}`,options)
         if(response.ok){
-            const jsonResponse = response.json()
+            const jsonResponse = await response.json()
             return jsonResponse
         }else{
             return rejectWithValue({error:"Not Upadted !"})
@@ -72,11 +71,11 @@ export const deleteTaskFromServer = createAsyncThunk(
     "tasks/deleteTaskFromServer",
     async (task,{rejectWithValue})=>{
         const options = {
-            method : "DELETE"
+            method : "DELETE",
         }
-        const response = await fetch(`${BASE_URL}/${task.id}`,options)
+        const response = await fetch(`${BASE_URL}/${task._id}`,options)
         if(response.ok){
-            const jsonResponse = response.json()
+            const jsonResponse = await response.json()
             return jsonResponse
         }else{
             return rejectWithValue({error:"Not deleted"})
@@ -91,7 +90,7 @@ const taskslice = createSlice({
     reducers : {
         deleteTaskFromList : (state,action) => {
             state.tasksList = state.tasksList.filter((task)=>{
-                return task.id !== action.payload.id
+                return task._id !== action.payload._id
             })
         },
         setTaskList : (state,action) => {
@@ -124,7 +123,7 @@ const taskslice = createSlice({
             state.isLoading = false
             state.error = ''
             state.tasksList = state.tasksList.map((item)=>{
-                return item.id === action.payload.id ? action.payload : item
+                return item._id === action.payload._id ? action.payload : item
             })
         }).addCase(updateTaskInServer.rejected,(state,action)=>{
             state.isLoading = false
@@ -135,8 +134,8 @@ const taskslice = createSlice({
             state.error = ''
             state.isLoading = false
         }).addCase(deleteTaskFromServer.rejected,(state,action)=>{
-            state.isLoading = false
             state.error = action.payload.error
+            state.isLoading = false
         })
     }
 })

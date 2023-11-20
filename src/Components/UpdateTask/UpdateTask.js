@@ -14,14 +14,14 @@ function MyVerticallyCenteredModal(props) {
 
     const updateTask = () => {
       props.onHide()
-      dispatch(updateTaskInServer({id,title,description}))
+      dispatch(updateTaskInServer({_id:id,title,description}))
   }
 
     useEffect(()=>{
       if(Object.keys(selectedTask).length !== 0){
         setTitle(selectedTask.title)
         setDescription(selectedTask.description)
-        setId(selectedTask.id)
+        setId(selectedTask._id)
       }
     },[selectedTask])
     
