@@ -53,9 +53,9 @@ const updateTask = async (req,res) => {
 //Delete task
 const deleteTask = async (req,res) => {
     const { id } = req.params
-    /* if(!mongoose.Types.ObjectId.isValid(id)){
+    if(!mongoose.Types.ObjectId.isValid(id)){
         return res.status(400).json({error:"Id is'not valid"})
-    } */
+    }
     try{
         await taskModel.findByIdAndDelete(id)
         return res.status(200).json({message : "Successfully deleted"})
