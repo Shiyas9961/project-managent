@@ -5,9 +5,9 @@ const mongoose = require('mongoose')
 const getTask = async (req,res) => {
     try{
         const Task = await taskModel.find({})
-        res.status(200).json(Task)
+        return res.status(200).json(Task)
     }catch(err){
-        res.status(400).json({error:err.message})
+        return res.status(400).json({error:err.message})
     }
 }
 
@@ -16,9 +16,9 @@ const getEachTask = async (req,res) => {
     const { id } = req.params
     try{
         const Task = await taskModel.findById(id)
-        res.status(200).json(Task)
+        return res.status(200).json(Task)
     }catch(err){
-        res.status(400).json({error:err.message})
+        return res.status(400).json({error:err.message})
     }
 }
 
@@ -28,9 +28,9 @@ const createTask = async (req,res) => {
 
     try{
         const Task = await taskModel.create({ title,description })
-        res.status(200).json(Task)
+        return res.status(200).json(Task)
     }catch(err){
-        res.status(400).json({error : err.message})
+        return res.status(400).json({error : err.message})
     }
 }
 
@@ -44,23 +44,23 @@ const updateTask = async (req,res) => {
     }
     try{
         const Task = await taskModel.findByIdAndUpdate(id,{title,description})
-        res.status(200).json(Task)
+        return res.status(200).json(Task)
     }catch(err){
-        res.status(400).json({error:err.message})
+        return res.status(400).json({error:err.message})
     }
 }
 
 //Delete task
 const deleteTask = async (req,res) => {
     const { id } = req.params
-    if(!mongoose.Types.ObjectId.isValid(id)){
+    /* if(!mongoose.Types.ObjectId.isValid(id)){
         return res.status(400).json({error:"Id is'not valid"})
-    }
+    } */
     try{
         await taskModel.findByIdAndDelete(id)
-        res.status(400).json({message:"Successfully deleted"})
+        return res.status(200).json({message : "Successfully deleted"})
     }catch(err){
-        res.status(400).json({error:err.message})
+        return res.status(400).json({error : err.message})
     }
 }
 
