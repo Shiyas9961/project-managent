@@ -9,7 +9,7 @@ const initialState = {
     error : ''
 }
 
-const BASE_URL = 'http://localhost:4001/api/tasks'
+const BASE_URL = 'https://project-manage-ment-server.onrender.com/api/tasks'
 
 //GET
 export const getTaskFromServer = createAsyncThunk(
