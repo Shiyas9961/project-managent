@@ -1,4 +1,6 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit'
+import axios from 'axios'
+
 
 const initialState = {
     tasksList : [],
@@ -7,7 +9,7 @@ const initialState = {
     error : ''
 }
 
-const BASE_URL = 'http://localhost:4000/api/tasks'
+const BASE_URL = 'http://localhost:4001/api/tasks'
 
 //GET
 export const getTaskFromServer = createAsyncThunk(
@@ -70,14 +72,11 @@ export const updateTaskInServer = createAsyncThunk(
 export const deleteTaskFromServer = createAsyncThunk(
     "tasks/deleteTaskFromServer",
     async (task,{rejectWithValue})=>{
-        const options = {
-            method : "DELETE",
-        }
-        const response = await fetch(`${BASE_URL}/${task._id}`,options)
-        if(response.ok){
-            const jsonResponse = await response.json()
+        try{
+            const response = await axios.delete(`${BASE_URL}/${task._id}`)
+            const jsonResponse = await response.data
             return jsonResponse
-        }else{
+        }catch(err){
             return rejectWithValue({error:"Not deleted"})
         }
     }

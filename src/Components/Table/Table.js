@@ -44,7 +44,7 @@ function TableComponent() {
                                 <td>{index+1}</td>
                                 <td>{task.title}</td>
                                 <td>{task.description}</td>
-                                <td><Button onClick={()=>updateTask(task)} className='mx-3' variant="primary"><i className="bi bi-pencil-square"></i></Button><Button onClick={()=>deleteTask(task)} variant="primary"><i className="bi bi-trash3"></i></Button></td>
+                                <td className='d-flex justify-content-center align-items-center'><Button onClick={()=>updateTask(task)} className='mx-3' variant="primary"><i className="bi bi-pencil-square"></i></Button><Button onClick={()=>deleteTask(task)} variant="primary"><i className="bi bi-trash3"></i></Button></td>
                             </tr>
                         )
                     })
